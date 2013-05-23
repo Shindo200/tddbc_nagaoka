@@ -93,6 +93,11 @@ describe "Version" do
         @f7u40.next_limited_update.update_number.should eq 60
         @f8u05.next_limited_update.update_number.should eq 20
       end
+
+      it "自分自身のバージョンは変わらないこと" do
+        @f7u40.next_limited_update
+        @f7u40.update_number.should eq 40
+      end
     end
 
     describe "#next_critical_patch_update" do
@@ -100,11 +105,21 @@ describe "Version" do
         @f7u40.next_critical_patch_update.update_number.should eq 45
         @f8u05.next_critical_patch_update.update_number.should eq 11
       end
+
+      it "自分自身のバージョンは変わらないこと" do
+        @f7u40.next_critical_patch_update
+        @f7u40.update_number.should eq 40
+      end
     end
 
     describe "#next_security_alert" do
       it "次のSecurityAlertUpdateの番号を持つVersionを返すこと" do
         @f8u05.next_security_alert.update_number.should eq 6
+      end
+
+      it "自分自身のバージョンは変わらないこと" do
+        @f7u40.next_security_alert
+        @f7u40.update_number.should eq 40
       end
     end
   end
