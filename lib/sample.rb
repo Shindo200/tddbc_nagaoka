@@ -26,4 +26,9 @@ class Version
     return update_number < ver_obj.update_number if family_number == ver_obj.family_number
     family_number < ver_obj.family_number
   end
+
+  def gt(ver_obj)
+    return update_number > ver_obj.update_number if family_number == ver_obj.family_number
+    family_number > ver_obj.family_number
+  end
 end
