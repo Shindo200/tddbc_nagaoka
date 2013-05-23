@@ -33,4 +33,10 @@ class Version
     next_update_number = @update_number + (20 - @update_number % 20)
     Version.new(@family_number, next_update_number)
   end
+
+  def next_critical_patch_update
+    next_update_number = @update_number + (5 - @update_number % 5)
+    next_update_number += 1 if next_update_number % 2 == 0
+    Version.new(@family_number, next_update_number)
+  end
 end
