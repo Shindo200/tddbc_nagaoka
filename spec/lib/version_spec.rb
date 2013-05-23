@@ -96,9 +96,15 @@ describe "Version" do
     end
 
     describe "#next_critical_patch_update" do
-      it "次のLimitedUpdateの番号を持つVersionを返すこと" do
+      it "次のCriticalPatchUpdateの番号を持つVersionを返すこと" do
         @f7u40.next_critical_patch_update.update_number.should eq 45
         @f8u05.next_critical_patch_update.update_number.should eq 11
+      end
+    end
+
+    describe "#next_security_alert" do
+      it "次のSecurityAlertUpdateの番号を持つVersionを返すこと" do
+        @f8u05.next_security_alert.update_number.should eq 6
       end
     end
   end
