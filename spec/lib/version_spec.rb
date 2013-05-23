@@ -41,7 +41,7 @@ describe "Version" do
       @f7u40 = Version.parse("JDK7u40")
       @f7u40_more = Version.parse("JDK7u40")
       @f7u51 = Version.parse("JDK7u51")
-      @f8u00 = Version.parse("JDK8u00")
+      @f8u05 = Version.parse("JDK8u05")
     end
 
     describe "#lt" do
@@ -54,7 +54,7 @@ describe "Version" do
       end
 
       it "自分より大きいファミリーナンバーを持つVersionを渡したときはtrueを返すこと" do
-        @f7u40.lt(@f8u00).should be_true
+        @f7u40.lt(@f8u05).should be_true
       end
 
       it "自分より小さいファミリーナンバーを持つVersionを渡したときはfalseを返すこと" do
@@ -80,11 +80,18 @@ describe "Version" do
       end
 
       it "自分より大きいファミリーナンバーを持つVersionを渡したときはfalseを返すこと" do
-        @f7u40.gt(@f8u00).should be_false
+        @f7u40.gt(@f8u05).should be_false
       end
 
       it "同じバージョンを持つVersionを渡したときはfalseを返すこと" do
         @f7u40.lt(@f7u40_more).should be_false
+      end
+    end
+
+    describe "#next_limited_update" do
+      it "次のLimitedUpdateの番号を持つVersionを返すこと" do
+        @f7u40.next_limited_update.update_number.should eq 60
+        @f8u05.next_limited_update.update_number.should eq 20
       end
     end
   end

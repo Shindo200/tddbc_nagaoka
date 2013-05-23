@@ -28,4 +28,9 @@ class Version
     return self.update_number > version.update_number if self.family_number == version.family_number
     self.family_number > version.family_number
   end
+
+  def next_limited_update
+    next_update_number = @update_number + (20 - @update_number % 20)
+    Version.new(@family_number, next_update_number)
+  end
 end
