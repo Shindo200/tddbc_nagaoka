@@ -1,34 +1,36 @@
 # -*- encoding: utf-8 -*-
 
 class Version
-  def initialize(var)
-    @var = var
+  VERSION_NAME_REGEXP = /^JDK(\d*)u(\d*)$/
+
+  def initialize(name)
+    @name = name
   end
 
-  def self.valid?(var)
-    !!(var =~ /^JDK\d*u\d*$/)
+  def self.valid?(name)
+    !!(VERSION_NAME_REGEXP =~ name)
   end
 
-  def self.parse(var)
-    return raise unless self.valid?(var)
-    Version.new(var)
+  def self.parse(name)
+    return raise unless self.valid?(name)
+    Version.new(name)
   end
 
   def family_number
-    return $1.to_i if /JDK(\d*)/ =~ @var
+    return $1.to_i if VERSION_NAME_REGEXP =~ @name
   end
 
   def update_number
-    return $1.to_i if /JDK\d*u(\d*)/ =~ @var
+    return $2.to_i if VERSION_NAME_REGEXP  =~ @name
   end
 
-  def lt(ver_obj)
-    return update_number < ver_obj.update_number if family_number == ver_obj.family_number
-    family_number < ver_obj.family_number
+  def lt(version)
+    return self.update_number < version.update_number if self.family_number == version.family_number
+    self.family_number < version.family_number
   end
 
-  def gt(ver_obj)
-    return update_number > ver_obj.update_number if family_number == ver_obj.family_number
-    family_number > ver_obj.family_number
+  def gt(version)
+    return self.update_number > version.update_number if self.family_number == version.family_number
+    self.family_number > version.family_number
   end
 end

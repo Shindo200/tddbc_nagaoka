@@ -29,6 +29,7 @@ describe "Version" do
       @f6u60 = Version.new("JDK6u60")
       @f7u35 = Version.new("JDK7u35")
       @f7u40 = Version.new("JDK7u40")
+      @f7u40_more = Version.new("JDK7u40")
       @f7u51 = Version.new("JDK7u51")
       @f8u00 = Version.new("JDK8u00")
     end
@@ -63,6 +64,10 @@ describe "Version" do
       it "自分より小さいファミリーナンバーを持つVersionを渡したときはfalseを返すこと" do
         @f7u40.lt(@f6u60).should be_false
       end
+
+      it "同じバージョンを持つVersionを渡したときはfalseを返すこと" do
+        @f7u40.lt(@f7u40_more).should be_false
+      end
     end
 
     describe "#gt" do
@@ -80,6 +85,10 @@ describe "Version" do
 
       it "自分より大きいファミリーナンバーを持つVersionを渡したときはfalseを返すこと" do
         @f7u40.gt(@f8u00).should be_false
+      end
+
+      it "同じバージョンを持つVersionを渡したときはfalseを返すこと" do
+        @f7u40.lt(@f7u40_more).should be_false
       end
     end
   end
