@@ -1,10 +1,12 @@
 # -*- encoding: utf-8 -*-
 
 class Version
+  attr_reader :family_number, :update_number
   VERSION_NAME_REGEXP = /^JDK(\d*)u(\d*)$/
 
-  def initialize(name)
-    @name = name
+  def initialize(family_number, update_number)
+    @family_number = family_number.to_i
+    @update_number = update_number.to_i
   end
 
   def self.valid?(name)
@@ -13,15 +15,8 @@ class Version
 
   def self.parse(name)
     return raise unless self.valid?(name)
-    Version.new(name)
-  end
-
-  def family_number
-    return $1.to_i if VERSION_NAME_REGEXP =~ @name
-  end
-
-  def update_number
-    return $2.to_i if VERSION_NAME_REGEXP  =~ @name
+    family_number, update_number = name.scan(VERSION_NAME_REGEXP).first
+    Version.new(family_number, update_number)
   end
 
   def lt(version)

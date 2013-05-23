@@ -19,6 +19,16 @@ describe "Version" do
       Version.parse("JDK7u40").should respond_to("family_number", "update_number")
     end
 
+    it "返されたオブジェクトに正しいfamily_numberがセットされていること" do
+      Version.parse("JDK7u40").family_number.should eq 7
+      Version.parse("JDK8u20").family_number.should eq 8
+    end
+
+    it "返されたオブジェクトに正しいupdate_numberがセットされていること" do
+      Version.parse("JDK7u40").update_number.should eq 40
+      Version.parse("JDK8u20").update_number.should eq 20
+    end
+
     it "正規のバージョンを表さない文字列を渡したときは例外を返すこと" do
       proc { Version.parse("JDK7u4x")}.should raise_error
     end
@@ -26,26 +36,12 @@ describe "Version" do
 
   context "バージョン値を持っているとき" do
     before do
-      @f6u60 = Version.new("JDK6u60")
-      @f7u35 = Version.new("JDK7u35")
-      @f7u40 = Version.new("JDK7u40")
-      @f7u40_more = Version.new("JDK7u40")
-      @f7u51 = Version.new("JDK7u51")
-      @f8u00 = Version.new("JDK8u00")
-    end
-
-    describe "#family_number" do
-      it "ファミリーナンバーを返すこと" do
-        @f7u40.family_number.should eq 7
-        @f8u00.family_number.should eq 8
-      end
-    end
-
-    describe "#update_number" do
-      it "アップデートナンバーを返すこと" do
-        @f7u40.update_number.should eq 40
-        @f7u35.update_number.should eq 35
-      end
+      @f6u60 = Version.parse("JDK6u60")
+      @f7u35 = Version.parse("JDK7u35")
+      @f7u40 = Version.parse("JDK7u40")
+      @f7u40_more = Version.parse("JDK7u40")
+      @f7u51 = Version.parse("JDK7u51")
+      @f8u00 = Version.parse("JDK8u00")
     end
 
     describe "#lt" do
