@@ -39,4 +39,9 @@ class Version
     next_update_number += 1 if next_update_number % 2 == 0
     Version.new(@family_number, next_update_number)
   end
+
+  def next_security_alert
+    next_update_number = @update_number + 1
+    Version.new(@family_number, next_update_number)
+  end
 end
