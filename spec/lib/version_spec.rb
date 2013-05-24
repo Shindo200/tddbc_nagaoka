@@ -3,11 +3,11 @@ require 'spec_helper'
 
 describe "Version" do
   describe ".valid?" do
-    it "正規のバージョンを表す文字列を渡したときはTrueを返すこと" do
+    it "正当なバージョンを表す文字列を渡したときはTrueを返すこと" do
       Version.valid?("JDK7u40").should be_true
     end
 
-    it "正規のバージョンを表さない文字列を渡したときはFalseを返すこと" do
+    it "正当なバージョンを表さない文字列を渡したときはFalseを返すこと" do
       Version.valid?("hoge").should be_false
       Version.valid?("fuga").should be_false
       Version.valid?("JDK7u9x").should be_false
@@ -29,7 +29,7 @@ describe "Version" do
       Version.parse("JDK8u20").update_number.should eq 20
     end
 
-    it "正規のバージョンを表さない文字列を渡したときは例外を返すこと" do
+    it "正当なバージョンを表さない文字列を渡したときは例外を返すこと" do
       proc { Version.parse("JDK7u4x")}.should raise_error
     end
   end
