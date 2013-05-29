@@ -1,6 +1,5 @@
-# -*- encoding: utf-8 -*-
-
 class Version
+  include Comparable
   attr_reader :family_number, :update_number
   VERSION_NAME_REGEXP = /^JDK(\d*)u(\d*)$/
 
@@ -19,14 +18,17 @@ class Version
     Version.new(family_number, update_number)
   end
 
-  def lt(version)
-    return self.update_number < version.update_number if self.family_number == version.family_number
-    self.family_number < version.family_number
+  def lt(other)
+    self < other
   end
 
-  def gt(version)
-    return self.update_number > version.update_number if self.family_number == version.family_number
-    self.family_number > version.family_number
+  def gt(other)
+    self > other
+  end
+
+  def <=>(other)
+    return self.update_number <=> other.update_number if self.family_number == other.family_number
+    self.family_number <=> other.family_number
   end
 
   def next_limited_update
